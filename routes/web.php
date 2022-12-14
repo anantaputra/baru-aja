@@ -32,8 +32,6 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('produk', [PageController::class, 'product'])->name('produk');
 Route::get('kontak', [PageController::class, 'contact'])->name('kontak');
 Route::get('detail/{id}', [PageController::class, 'detail'])->name('detail');
-Route::get('google', [GoogleAuthController::class, 'login'])->name('google');
-Route::get('auth/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
 Route::middleware('auth')->group(function(){
     Route::prefix('user')->name('user')->group(function(){
