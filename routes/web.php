@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\User\ReturController;
 use App\Http\Controllers\User\AlamatController;
 use App\Http\Controllers\User\ProfilController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\Admin\AdminProdukController;
 use App\Http\Controllers\Admin\AdminLaporanController;
 use App\Http\Controllers\Admin\AdminPesananController;
 use App\Http\Controllers\Admin\AdminKategoriController;
+use App\Http\Controllers\Admin\AdminTransaksiController;
 
 /*
 |--------------------------------------------------------------------------
