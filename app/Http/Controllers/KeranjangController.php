@@ -26,7 +26,11 @@ class KeranjangController extends Controller
                 ->where('checkout', false)
                 ->where('id_produk', $produk->id_produk)->first();
         if($item){
-            $item->jumlah = $item->jumlah + $request->qty;
+            if(($request->qty + $item->jumlah) >= $produk->stok ){
+                $item->jumlah = $produk->stok;
+            } else {
+                $item->jumlah = $item->jumlah + $request->qty;
+            }
             $item->save();
         } else {
             $item = new Keranjang();
@@ -40,36 +44,37 @@ class KeranjangController extends Controller
 
     public function checkout()
     {
-        $alamat = AlamatUser::where('id_user', auth()->user()->id_user)->get()->count();
-        
-        if ($alamat == 0) {
-            return redirect()->route('user.alamat');
-        } else {
-            $alamat = AlamatUser::where('id_user', auth()->user()->id_user)
+        $alamat = AlamatUser::where('id_user', auth()->user()->id_user)
                     ->where('utama', true)
                     ->get();
 
-            $berat = 0;
-            $provinsi = RajaOngkirController::semua_provinsi();
-            $keranjang = Keranjang::where('id_user', auth()->user()->id_user)
-                        ->where('checkout', false)
-                        ->get();
-            foreach ($keranjang as $item) {
-                $produk = Produk::find($item->id_produk);
-                $berat += $produk->berat * $item->jumlah;
-            }
-
-            if(count($alamat) > 0){
-                $jne = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'jne', $berat);
-
-                $pos = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'pos', $berat);
-
-                $tiki = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'tiki', $berat);
-
-                return view('pesan.pesan-sekarang', compact('keranjang', 'alamat', 'provinsi', 'jne', 'pos', 'tiki'));
-            } else {
-                return redirect()->route('user.alamat')->with('status', 'kosong');
-            }
+        $berat = 0;
+        $provinsi = RajaOngkirController::semua_provinsi();
+        $keranjang = Keranjang::where('id_user', auth()->user()->id_user)
+                    ->where('checkout', false)
+                    ->get();
+        foreach ($keranjang as $item) {
+            $produk = Produk::find($item->id_produk);
+            $berat += $produk->berat * $item->jumlah;
         }
+
+        if(count($alamat) > 0){
+            $jne = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'jne', $berat);
+
+            $pos = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'pos', $berat);
+
+            $tiki = RajaOngkirController::get_ongkir($alamat[0]->kode_kota, 'tiki', $berat);
+
+            return view('pesan.pesan-sekarang', compact('keranjang', 'alamat', 'provinsi', 'jne', 'pos', 'tiki'));
+        } else {
+            return redirect()->route('user.alamat')->with('status', 'kosong');
+        }
+    }
+
+    public function hapus($id)
+    {
+        $cart = Keranjang::where('uuid', $id)->first();
+        $cart->delete();
+        return redirect()->back();
     }
 }

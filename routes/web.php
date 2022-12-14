@@ -79,6 +79,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/', [KeranjangController::class, 'index']);
         Route::post('tambah', [KeranjangController::class, 'tambah'])->name('.tambah');
         Route::get('checkout', [KeranjangController::class, 'checkout'])->name('.checkout');
+        Route::get('{id}/tambah', [KeranjangController::class, 'add'])->name('.add');
+        Route::get('{id}/kurang', [KeranjangController::class, 'min'])->name('.min');
+        Route::get('{id}/hapus', [KeranjangController::class, 'hapus'])->name('.hapus');
     });
     Route::prefix('pesan')->name('pesan')->group(function(){
         Route::post('/', [PesananController::class, 'pesan'])->name('.sekarang');
@@ -89,6 +92,8 @@ Route::middleware('auth')->group(function(){
         Route::get('keranjang', [CheckoutController::class, 'keranjang'])->name('.keranjang');
         Route::post('simpan', [CheckoutController::class, 'simpan'])->name('.simpan');
     });
+    Route::get('bayar', [PesananController::class, 'bayar'])->name('bayar');
+    Route::post('bayar', [PesananController::class, 'simpan']);
 });
 
 Route::prefix('admin')->name('admin')->middleware('auth')->group(function(){

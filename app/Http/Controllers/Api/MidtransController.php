@@ -26,17 +26,17 @@ class MidtransController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => 10000,
+                'gross_amount' => $total,
             ),
             'customer_details' => array(
-                'first_name' => 'budi',
-                'last_name' => 'pratama',
-                'email' => 'budi.pra@example.com',
-                'phone' => '08111222333',
+                'first_name' => auth()->user()->nama_depan,
+                'last_name' => auth()->user()->nama_belakang,
+                'email' => auth()->user()->email,
+                'phone' => auth()->user()->telepon,
             ),
         );
         
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return \Midtrans\Snap::getSnapToken($params);
     }
 
     public static function bank_transfer($total, $bank)

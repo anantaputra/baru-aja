@@ -80,7 +80,9 @@ class CheckoutController extends Controller
 
     public function simpan(Request $request)
     {
-        // return $request;
+        if(!isset($request->paket)){
+            return redirect()->back()->with('error', 'Pilih Jasa Pengiriman Dulu');
+        }
         $orderID = Pesanan::latest()->first();
         if($orderID){
             $orderID = $orderID->id_pesanan;
@@ -132,8 +134,11 @@ class CheckoutController extends Controller
 
         // return redirect()->route('user.tagihan.detail', ['id' => $transaksi->uuid]);
         $token = MidtransController::config($request->total);
-        return $token;
-        return redirect()->route('bayar')->with('token', $token);
+        // return $token;
+        return redirect()->route('bayar')->with([
+            'token' => $token,
+            'id' => $orderID
+        ]);
         // return view('pesan.bayar', compact(''))
     }
 }

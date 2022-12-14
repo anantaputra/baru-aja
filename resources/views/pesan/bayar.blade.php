@@ -6,14 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript"
     src="https://app.midtrans.com/snap/snap.js"
-    data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
-    <title>Elis Salon</title>
+    data-client-key="Mid-client-tjICMZmEzWC800D6"></script>
+    <title>Nasywa Snack</title>
 </head>
 <body>
 
 
     <form action="" method="POST" id="submit_form">
         @csrf
+        <input type="hidden" name="id" value="{{ Session::get('id') }}">
         <input type="hidden" name="json" id="json_callback">
     </form>
     

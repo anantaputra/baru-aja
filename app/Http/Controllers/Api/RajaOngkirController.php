@@ -67,8 +67,14 @@ class RajaOngkirController extends Controller
         if(str_contains($date, 'HARI')){
             $tgl_terima = explode(' ', $date);
             $tgl_terima = $tgl_terima[0];
-            $tgl_awal = Carbon::today()->addDays($tgl_terima + 2)->format('Y-m-d');
-            $tgl_akhir = Carbon::today()->addDays($tgl_terima + 4)->format('Y-m-d');
+            if(str_contains($tgl_terima, '-')){
+                $tgl = explode('-', $tgl_terima);
+                $tgl_awal = Carbon::today()->addDays($tgl[0] + 2)->format('Y-m-d');
+                $tgl_akhir = Carbon::today()->addDays($tgl[1] + 4)->format('Y-m-d');
+            } else {
+                $tgl_awal = Carbon::today()->addDays($tgl_terima + 2)->format('Y-m-d');
+                $tgl_akhir = Carbon::today()->addDays($tgl_terima + 4)->format('Y-m-d');
+            }
         } else if(str_contains($date, '-')){
             $tgl_terima = explode('-', $date);
             $tgl_awal = $tgl_terima[0];
