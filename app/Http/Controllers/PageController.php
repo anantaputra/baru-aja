@@ -15,7 +15,8 @@ class PageController extends Controller
 
     public function product()
     {
-        return view('product');
+        $produk = Produk::all();
+        return view('product', compact('produk'));
     }
 
     public function contact()
