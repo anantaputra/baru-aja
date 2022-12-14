@@ -40,7 +40,7 @@
                             @php
                                 $gambar = json_decode($item->produk->gambar);
                             @endphp
-                            <img src="{{ asset('upload/produk/'.$gambar[0]) }}" alt="" class="w-16 h-16">
+                            <img src="{{ asset('storage/upload/produk/'.$gambar[0]) }}" alt="" class="w-16 h-16">
                         </div>
                         <div>
                             {{ $item->produk->nama_produk }}
