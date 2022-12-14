@@ -11,7 +11,7 @@
               @php
                   $gambar = json_decode($item->gambar);
               @endphp
-              <img class="p-2 rounded-t-xl w-full h-56" src="{{ asset('upload/produk/'.$gambar[0].'') }}" alt="product image" />
+              <img class="p-2 rounded-t-xl w-full h-56" src="{{ asset('storage/upload/produk/'.$gambar[0].'') }}" alt="product image" />
               <div class="px-3 pb-3">
                 <h5 class="tracking-tight text-gray-900">{{ $item->nama_produk }}</h5>
                 <div class="flex justify-between items-center">
