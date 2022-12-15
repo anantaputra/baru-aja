@@ -77,4 +77,25 @@ class KeranjangController extends Controller
         $cart->delete();
         return redirect()->back();
     }
+
+    public function add($id)
+    {
+        $keranjang = Keranjang::where('uuid', $id)->first();
+        $produk = Produk::find($keranjang->id_produk);
+        if ($produk->stok > $keranjang->jumlah) {
+            $keranjang->jumlah = $keranjang->jumlah + 1;
+            $keranjang->save();
+        }
+        return redirect()->back();
+    }
+
+    public function min($id)
+    {
+        $keranjang = Keranjang::where('uuid', $id)->first();
+        if ($keranjang->jumlah > 1) {
+            $keranjang->jumlah = $keranjang->jumlah - 1;
+            $keranjang->save();
+        }
+        return redirect()->back();
+    }
 }

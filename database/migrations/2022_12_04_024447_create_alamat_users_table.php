@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('alamat_users', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('id_user');
+            $table->string('id_user', 10);
             $table->string('nama');
             $table->string('telepon');
             $table->string('provinsi');
@@ -28,6 +28,8 @@ return new class extends Migration
             $table->boolean('utama')->default(false);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
         });
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->string('id_produk', 10)->primary();
             $table->uuid('uuid');
-            $table->string('id_kategori');
+            $table->string('id_kategori', 10);
             $table->string('nama_produk');
             $table->integer('harga');
             $table->integer('berat');
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('gambar')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategoris');
         });
     }
 

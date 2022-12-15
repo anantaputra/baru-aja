@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('returs', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('id_user');
-            $table->string('id_pesanan');
+            $table->string('id_user', 10);
+            $table->string('id_pesanan', 16);
             $table->text('keterangan');
             $table->string('bukti_resi');
             $table->string('bukti_produk');
@@ -25,6 +25,9 @@ return new class extends Migration
             $table->text('alasan')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanans');
         });
     }
 

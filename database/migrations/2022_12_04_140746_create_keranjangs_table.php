@@ -16,13 +16,16 @@ return new class extends Migration
         Schema::create('keranjangs', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('id_user');
-            $table->string('id_produk');
+            $table->string('id_user', 10);
+            $table->string('id_produk', 10);
             $table->integer('jumlah');
             $table->boolean('checkout')->default(false);
             $table->string('id_pesanan')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_produk')->references('id_produk')->on('produks');
         });
     }
 

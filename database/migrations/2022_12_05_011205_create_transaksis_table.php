@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('id_pesanan');
+            $table->string('id_pesanan', 16);
             $table->string('id_transaksi');
             $table->string('metode');
             $table->integer('total');
@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanans');
         });
     }
 

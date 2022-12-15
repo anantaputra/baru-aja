@@ -16,12 +16,15 @@ return new class extends Migration
         Schema::create('pesanans', function (Blueprint $table) {
             $table->string('id_pesanan', 16)->primary();
             $table->uuid();
-            $table->string('id_user');
+            $table->string('id_user', 10);
             $table->foreignId('id_alamat');
             $table->integer('jumlah');
             $table->string('pengiriman')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_alamat')->references('id')->on('alamat_users');
         });
     }
 

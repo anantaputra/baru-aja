@@ -26,6 +26,9 @@
         $total = 0;
     @endphp
     @if (isset($keranjang))
+    @php
+        $i = 1;
+    @endphp
     <div class="w-full bg-white shadow-sm mb-4">
         @foreach ($keranjang as $item)
         @php
@@ -54,18 +57,18 @@
                 </div>
                 <div class="col-span-2 flex items-center">
                     <div class="w-32 flex">
-                        <button onclick="decrement()" class="w-1/4 flex justify-center py-2 border-y border-l border-black cursor-pointer">
+                        <a href="{{ route('keranjang.min', ['id' => $item->uuid]) }}" class="w-1/4 flex justify-center py-2 border-y border-l border-black cursor-pointer">
                             -
-                        </button>
+                        </a>
                         <div class="w-1/2 border-t-b">
-                            <input type="text" id="qty" value="{{ $item->jumlah }}" class="w-full outline-none text-basecursor-default flex items-center text-center" readonly>
+                            <input type="text" value="{{ $item->jumlah }}" class="w-full outline-none text-basecursor-default flex items-center text-center" readonly>
                         </div>
-                        <button onclick="increment({{ $item->produk->stok }})" class="w-1/4 flex justify-center py-2 border-y border-r border-black cursor-pointer">
+                        <a href="{{ route('keranjang.add', ['id' => $item->uuid]) }}" class="w-1/4 flex justify-center py-2 border-y border-r border-black cursor-pointer">
                             +
-                        </button>
+                        </a>
                     </div>
                 </div>
-                <div class="col-span-2 flex items-center">
+                <div class="col-span-2 flex items-center" id="tot-{{ $i }}">
                     Rp{{ number_format(($item->produk->harga * $item->jumlah), 0, 0, '.') }}
                 </div>
                 <div class="flex items-center">
@@ -73,6 +76,9 @@
                 </div>
             </div>
         </div>
+        @php
+            $i++;
+        @endphp
         @endforeach
     </div>
     @endif
@@ -93,25 +99,4 @@
 
 </div>
 
-
-<script>
-    function decrement(){
-        var qty = Number(document.querySelector('#qty').value);
-        if (qty > 1) {
-            qty--;
-            document.querySelector('#qty').value = qty;
-            document.querySelector('#kuantitas-now').value = qty;
-            document.querySelector('#kuantitas-cart').value = qty;
-        }
-    }
-    function increment(stok){
-        var qty = Number(document.querySelector('#qty').value);
-        if (qty < stok) {
-            qty++;
-            document.querySelector('#qty').value = qty;
-            document.querySelector('#kuantitas-now').value = qty;
-            document.querySelector('#kuantitas-cart').value = qty;
-        }
-    }
-</script>
 @endsection

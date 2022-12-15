@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keranjang;
+use App\Models\Produk;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -21,7 +23,6 @@ class PesananController extends Controller
 
     public function simpan(Request $request)
     {
-        return $request;
         $json = json_decode($request->json);
         $transaksi = new Transaksi();
         $transaksi->id_pesanan = $request->id;
@@ -32,6 +33,15 @@ class PesananController extends Controller
         $transaksi->status = $json->transaction_status;
         $transaksi->save();
 
-        return redirect()->route('user.tagihan.detail', ['id' => $transaksi->uuid]);
+        if ($json->transaction_status == 'settlement') {
+            $keranjang = Keranjang::where('id_pesanan', $request->id)->get();
+            foreach ($keranjang as $item) {
+                $produk = Produk::find($item->id_produk);
+                $produk->stok = $produk->stok - $item->jumlah;
+                $produk->save();
+            }
+        }
+
+        return redirect()->route('user.riwayat.nota', ['id' => $transaksi->uuid]);
     }
 }

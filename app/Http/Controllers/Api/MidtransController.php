@@ -15,9 +15,9 @@ class MidtransController extends Controller
     public static function config($total)
     {
         // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = 'Mid-server-xduIC_uU514fLOQVKQdWdRva';
+        \Midtrans\Config::$serverKey = env('MIDTRANS_ISPRODUCTION') ? env('MIDTRANS_SERVER_KEY_PRODUCTION') : env('MIDTRANS_SERVER_KEY_SANDBOX');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = true;
+        \Midtrans\Config::$isProduction = env('MIDTRANS_ISPRODUCTION');
         // Set sanitization on (default)
         \Midtrans\Config::$isSanitized = true;
         // Set 3DS transaction for credit card to true

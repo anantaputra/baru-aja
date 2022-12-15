@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript"
-    src="https://app.midtrans.com/snap/snap.js"
-    data-client-key="Mid-client-tjICMZmEzWC800D6"></script>
+    src="{{ env('MIDTRANS_ISPRODUCTION') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+    data-client-key="{{ env('MIDTRANS_ISPRODUCTION') ? env('MIDTRANS_CLIENT_KEY_PRODUCTION') : env('MIDTRANS_CLIENT_KEY_SANDBOX') }}"></script>
     <title>Nasywa Snack</title>
 </head>
 <body>
